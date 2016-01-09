@@ -13,6 +13,11 @@
 		210101751C3FBA530067AE29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 210101731C3FBA530067AE29 /* Main.storyboard */; };
 		210101771C3FBA530067AE29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 210101761C3FBA530067AE29 /* Assets.xcassets */; };
 		2101017A1C3FBA530067AE29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 210101781C3FBA530067AE29 /* LaunchScreen.storyboard */; };
+		210101831C40A1C70067AE29 /* RFTEndlessScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */; };
+		210101861C40AB300067AE29 /* RFTScrollSubjectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 210101851C40AB300067AE29 /* RFTScrollSubjectsView.m */; };
+		2153EA7D1C40C5B400D36966 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2153EA7A1C40C5B400D36966 /* 1.png */; };
+		2153EA7E1C40C5B400D36966 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2153EA7B1C40C5B400D36966 /* 2.png */; };
+		2153EA7F1C40C5B400D36966 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2153EA7C1C40C5B400D36966 /* 3.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,13 @@
 		210101761C3FBA530067AE29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		210101791C3FBA530067AE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2101017B1C3FBA530067AE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		210101811C40A1C70067AE29 /* RFTEndlessScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFTEndlessScrollView.h; sourceTree = "<group>"; };
+		210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFTEndlessScrollView.m; sourceTree = "<group>"; };
+		210101841C40AB300067AE29 /* RFTScrollSubjectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFTScrollSubjectsView.h; sourceTree = "<group>"; };
+		210101851C40AB300067AE29 /* RFTScrollSubjectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFTScrollSubjectsView.m; sourceTree = "<group>"; };
+		2153EA7A1C40C5B400D36966 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		2153EA7B1C40C5B400D36966 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		2153EA7C1C40C5B400D36966 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,11 @@
 		210101691C3FBA530067AE29 /* RFTEndlessScrollingView */ = {
 			isa = PBXGroup;
 			children = (
+				2153EA801C40C5BE00D36966 /* image */,
+				210101811C40A1C70067AE29 /* RFTEndlessScrollView.h */,
+				210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */,
+				210101841C40AB300067AE29 /* RFTScrollSubjectsView.h */,
+				210101851C40AB300067AE29 /* RFTScrollSubjectsView.m */,
 				2101016D1C3FBA530067AE29 /* AppDelegate.h */,
 				2101016E1C3FBA530067AE29 /* AppDelegate.m */,
 				210101701C3FBA530067AE29 /* ViewController.h */,
@@ -77,6 +94,16 @@
 				2101016B1C3FBA530067AE29 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2153EA801C40C5BE00D36966 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				2153EA7A1C40C5B400D36966 /* 1.png */,
+				2153EA7B1C40C5B400D36966 /* 2.png */,
+				2153EA7C1C40C5B400D36966 /* 3.png */,
+			);
+			name = image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +164,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2101017A1C3FBA530067AE29 /* LaunchScreen.storyboard in Resources */,
+				2153EA7D1C40C5B400D36966 /* 1.png in Resources */,
+				2153EA7E1C40C5B400D36966 /* 2.png in Resources */,
+				2153EA7F1C40C5B400D36966 /* 3.png in Resources */,
 				210101771C3FBA530067AE29 /* Assets.xcassets in Resources */,
 				210101751C3FBA530067AE29 /* Main.storyboard in Resources */,
 			);
@@ -150,6 +180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				210101721C3FBA530067AE29 /* ViewController.m in Sources */,
+				210101831C40A1C70067AE29 /* RFTEndlessScrollView.m in Sources */,
+				210101861C40AB300067AE29 /* RFTScrollSubjectsView.m in Sources */,
 				2101016F1C3FBA530067AE29 /* AppDelegate.m in Sources */,
 				2101016C1C3FBA530067AE29 /* main.m in Sources */,
 			);
@@ -262,6 +294,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RFTEndlessScrollingView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.YJXie.RFTEndlessScrollingView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -273,6 +306,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RFTEndlessScrollingView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.YJXie.RFTEndlessScrollingView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -298,6 +332,7 @@
 				210101801C3FBA530067AE29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
