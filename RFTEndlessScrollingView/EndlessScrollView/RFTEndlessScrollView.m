@@ -14,28 +14,24 @@ static NSTimeInterval const kEndlessScrollViewTransitionDuration = 0.4;
 static NSTimeInterval const kAutoPlayTimeInterval = 3.0;
 
 typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
-    RFTEndlessScrollViewScrollDirectionBackward     = 0,
+    RFTEndlessScrollViewScrollDirectionBackward = 0,
     RFTEndlessScrollViewScrollDirectionForward
 };
 
 @interface RFTEndlessScrollView ()<UIScrollViewDelegate>
 
 @property (nonatomic, assign) BOOL isManualAnimating;
-@property (nonatomic, strong) NSTimer* timer_autoPlay;
+@property (nonatomic, strong) NSTimer *timer_autoPlay;
 @property (nonatomic, assign) NSUInteger currentPage;
 
 @end
 
 @implementation RFTEndlessScrollView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self initializeControl];
-        if(self.numberOfPages){
-            
-        }
     }
     return self;
 }
@@ -46,8 +42,9 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
     _controlDelegate = nil;
 }
 
-- (void) initializeControl
-{
+#pragma mark - Initialization
+
+- (void) initializeControl {
     self.showsHorizontalScrollIndicator = NO;
     self.showsVerticalScrollIndicator = NO;
     self.pagingEnabled = YES;
@@ -64,7 +61,7 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
         [_timer_autoPlay invalidate];
         _timer_autoPlay = nil;
     }
-    _timer_autoPlay = [NSTimer scheduledTimerWithTimeInterval:kAutoPlayTimeInterval target:self selector:@selector(autoPlayHanlde:) userInfo:nil repeats:YES];
+    _timer_autoPlay = [NSTimer scheduledTimerWithTimeInterval:kAutoPlayTimeInterval target:self selector:@selector(autoPlayHandle:) userInfo:nil repeats:YES];
 }
 
 - (void)setPage:(NSInteger)newIndex animated:(BOOL)animated {
@@ -72,10 +69,9 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
 }
 
 - (void)setPage:(NSInteger)newIndex transition:(RFTEndlessScrollViewTransition)transition animated:(BOOL)animated {
-    if (newIndex == _currentPage) return;
+    if (newIndex == self.currentPage) return;
     
     if (animated) {
-        //BOOL isOnePageMove = (abs(self.currentPage-newIndex) == 1);
         CGPoint finalOffset;
         
         if (transition == RFTEndlessScrollViewTransitionAuto) {
@@ -86,18 +82,10 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
         CGFloat size = self.frame.size.width;
         
         if (transition == RFTEndlessScrollViewTransitionForward) {
-            //if (!isOnePageMove)
-            //[self loadControllerAtIndex:newIndex andPlaceAtIndex:2];
             [self loadImageViewAtIndex:newIndex andPlaceAtIndex:1];
-            
-            //finalOffset = [self createPoint:(size*(isOnePageMove ? 3 : 4))];
             finalOffset = [self createPoint:(size*3)];
         } else {
-            //if (!isOnePageMove)
-            //[self loadControllerAtIndex:newIndex andPlaceAtIndex:-2];
             [self loadImageViewAtIndex:newIndex andPlaceAtIndex:-1];
-            
-            //finalOffset = [self createPoint:(size*(isOnePageMove ? 1 : 0))];
             finalOffset = [self createPoint:(size*1)];
         }
         self.isManualAnimating = YES;
@@ -119,52 +107,36 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
 
 #pragma mark - Private Method
 
-- (void)autoPlayHanlde:(id)timer
-{
+- (void)autoPlayHandle:(id)timer {
     if ([self hasMultiplePages]) {
         [self autoPlayGoToNextPage];
     }
 }
 
-- (void)autoPlayGoToNextPage
-{
-    NSInteger nextPage = self.currentPage+1;
-    if(nextPage >= self.numberOfPages)
-    {
+- (void)autoPlayGoToNextPage {
+    NSInteger nextPage = self.currentPage + 1;
+    if(nextPage >= self.numberOfPages) {
         nextPage = 0;
     }
     [self setPage:nextPage animated:YES];
 }
 
-- (void)autoPlayPause
-{
-    if(_timer_autoPlay)
-    {
+- (void)autoPlayPause {
+    if(_timer_autoPlay) {
         [_timer_autoPlay invalidate];
         _timer_autoPlay = nil;
     }
 }
 
-- (void)autoPlayResume
-{
+- (void)autoPlayResume {
     [self resetAutoPlay];
 }
 
-- (CGRect) visibleRect
-{
-    CGRect visibleRect;
-    visibleRect.origin = self.contentOffset;
-    visibleRect.size = self.bounds.size;
-    return visibleRect;
-}
-
-- (CGPoint) createPoint:(CGFloat) size
-{
+- (CGPoint)createPoint:(CGFloat)size {
     return CGPointMake(size, 0);
 }
 
-- (void) setNumberOfPages:(NSUInteger)pages
-{
+- (void)setNumberOfPages:(NSUInteger)pages {
     if (pages != _numberOfPages) {
         _numberOfPages = pages;
         unsigned long int offset = [self hasMultiplePages] ? _numberOfPages + 2 : 1;
@@ -172,15 +144,9 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
     }
 }
 
-- (void) setCurrentPage:(NSUInteger)newCurrentPage
-{
-    [self setCurrentImageView:newCurrentPage];
-}
-
-- (void) setCurrentImageView: (NSInteger)index
-{
-    if (index == _currentPage) return;
-    _currentPage = index;
+- (void)setCurrentImageView:(NSInteger)index {
+    if (index == self.currentPage) return;
+    self.currentPage = index;
     
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -189,8 +155,8 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
     // Pre-load the content for the adjacent pages if multiple pages are to be displayed
     if ([self hasMultiplePages]) {
         
-        NSInteger prevPage = [self pageIndexByAdding:-1 from: _currentPage];
-        NSInteger nextPage = [self pageIndexByAdding:+1 from: _currentPage];
+        NSInteger prevPage = [self pageIndexByAdding:-1 from: self.currentPage];
+        NSInteger nextPage = [self pageIndexByAdding:+1 from: self.currentPage];
         
         [self loadImageViewAtIndex:prevPage andPlaceAtIndex:-1];   // load previous page
         [self loadImageViewAtIndex:nextPage andPlaceAtIndex:1];   // load next page
@@ -203,10 +169,8 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
         [self.controlDelegate endlessScrollView:self currentPageChanged:self.currentPage];
 }
 
-- (UIImageView *) loadImageViewAtIndex:(NSInteger) index andPlaceAtIndex:(NSInteger) destIndex
-{
-    UIImageView *imageView = _dataSource[index];
-    imageView.tag = 0;
+- (UIImageView *)loadImageViewAtIndex:(NSInteger)index andPlaceAtIndex:(NSInteger)destIndex {
+    UIImageView *imageView = self.dataSource[index];
     
     CGRect viewFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     int offset = [self hasMultiplePages] ? 2 : 0;
@@ -216,40 +180,29 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
     return imageView;
 }
 
-- (NSInteger) pageIndexByAdding:(NSInteger) offset from:(NSInteger) index
-{
-    // Complicated stuff with negative modulo
-    while (offset<0) offset += _numberOfPages;
-    return (_numberOfPages+index+offset) % _numberOfPages;
+- (NSInteger)pageIndexByAdding:(NSInteger)offset from:(NSInteger)index {
+    while (offset < 0) {
+        offset += _numberOfPages;
+    }
+    return (_numberOfPages + index + offset) % _numberOfPages;
 }
 
-- (BOOL) hasMultiplePages
-{
-    return _numberOfPages > 1;
+- (BOOL)hasMultiplePages {
+    return self.numberOfPages > 1;
 }
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self autoPlayPause];
-    /*
-     if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewWillBeginDragging:)])
-     [controlDelegate lazyScrollViewWillBeginDragging:self];
-     */
 }
 
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     self.bounces = YES;
-    /*
-     if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewDidEndDragging:)])
-     [controlDelegate lazyScrollViewDidEndDragging:self];
-     */
     [self autoPlayResume];
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.isManualAnimating) {
         return;
     }
@@ -273,12 +226,12 @@ typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
         [self loadImageViewAtIndex:prevPage andPlaceAtIndex:(proposedScroll == RFTEndlessScrollViewScrollDirectionBackward ? -1 : 1)];
     }
     
-    NSInteger newPageIndex = _currentPage;
+    NSInteger newPageIndex = self.currentPage;
     
     if (offset <= size)
-        newPageIndex = [self pageIndexByAdding:-1 from:_currentPage];
+        newPageIndex = [self pageIndexByAdding:-1 from:self.currentPage];
     else if (offset >= (size*3))
-        newPageIndex = [self pageIndexByAdding:+1 from:_currentPage];
+        newPageIndex = [self pageIndexByAdding:+1 from:self.currentPage];
     
     [self setCurrentImageView:newPageIndex];
 }
