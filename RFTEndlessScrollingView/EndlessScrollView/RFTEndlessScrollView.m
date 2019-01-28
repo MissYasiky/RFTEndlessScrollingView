@@ -8,19 +8,22 @@
 
 #import "RFTEndlessScrollView.h"
 
-#define kRFTEndlessScrollViewTransitionDuration     0.4
+// 切换下一页的动画持续时间
+static NSTimeInterval const kEndlessScrollViewTransitionDuration = 0.4;
+// 自动播放时，每一页停留时间
+static NSTimeInterval const kAutoPlayTimeInterval = 3.0;
 
-enum {
+typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewScrollDirection) {
     RFTEndlessScrollViewScrollDirectionBackward     = 0,
-    RFTEndlessScrollViewScrollDirectionForward      = 1
-}; typedef NSUInteger RFTEndlessScrollViewScrollDirection;
-
+    RFTEndlessScrollViewScrollDirectionForward
+};
 
 @interface RFTEndlessScrollView ()<UIScrollViewDelegate>
-{
-    BOOL isManualAnimating;
-}
-//@property (nonatomic, strong) NSTimer* timer_autoPlay;
+
+@property (nonatomic, assign) BOOL isManualAnimating;
+@property (nonatomic, strong) NSTimer* timer_autoPlay;
+@property (nonatomic, assign) NSUInteger currentPage;
+
 @end
 
 @implementation RFTEndlessScrollView
@@ -29,7 +32,6 @@ enum {
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.autoPlayTime = 3;
         [self initializeControl];
         if(self.numberOfPages){
             
@@ -55,15 +57,67 @@ enum {
     _currentPage = NSNotFound;
 }
 
-- (void)resetAutoPlay
-{
-    if(_timer_autoPlay)
-    {
+#pragma mark - Public Method
+
+- (void)resetAutoPlay {
+    if(_timer_autoPlay) {
         [_timer_autoPlay invalidate];
         _timer_autoPlay = nil;
     }
-    _timer_autoPlay = [NSTimer scheduledTimerWithTimeInterval:_autoPlayTime target:self selector:@selector(autoPlayHanlde:) userInfo:nil repeats:YES];
+    _timer_autoPlay = [NSTimer scheduledTimerWithTimeInterval:kAutoPlayTimeInterval target:self selector:@selector(autoPlayHanlde:) userInfo:nil repeats:YES];
 }
+
+- (void)setPage:(NSInteger)newIndex animated:(BOOL)animated {
+    [self setPage:newIndex transition:RFTEndlessScrollViewTransitionForward animated:animated];
+}
+
+- (void)setPage:(NSInteger)newIndex transition:(RFTEndlessScrollViewTransition)transition animated:(BOOL)animated {
+    if (newIndex == _currentPage) return;
+    
+    if (animated) {
+        //BOOL isOnePageMove = (abs(self.currentPage-newIndex) == 1);
+        CGPoint finalOffset;
+        
+        if (transition == RFTEndlessScrollViewTransitionAuto) {
+            if (newIndex > self.currentPage) transition = RFTEndlessScrollViewTransitionForward;
+            else if (newIndex < self.currentPage) transition = RFTEndlessScrollViewTransitionBackward;
+        }
+        
+        CGFloat size = self.frame.size.width;
+        
+        if (transition == RFTEndlessScrollViewTransitionForward) {
+            //if (!isOnePageMove)
+            //[self loadControllerAtIndex:newIndex andPlaceAtIndex:2];
+            [self loadImageViewAtIndex:newIndex andPlaceAtIndex:1];
+            
+            //finalOffset = [self createPoint:(size*(isOnePageMove ? 3 : 4))];
+            finalOffset = [self createPoint:(size*3)];
+        } else {
+            //if (!isOnePageMove)
+            //[self loadControllerAtIndex:newIndex andPlaceAtIndex:-2];
+            [self loadImageViewAtIndex:newIndex andPlaceAtIndex:-1];
+            
+            //finalOffset = [self createPoint:(size*(isOnePageMove ? 1 : 0))];
+            finalOffset = [self createPoint:(size*1)];
+        }
+        self.isManualAnimating = YES;
+        
+        [UIView animateWithDuration:kEndlessScrollViewTransitionDuration
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.contentOffset = finalOffset;
+                         } completion:^(BOOL finished) {
+                             if (!finished) return;
+                             [self setCurrentImageView:newIndex];
+                             self.isManualAnimating = NO;
+                         }];
+    } else {
+        [self setCurrentImageView:newIndex];
+    }
+}
+
+#pragma mark - Private Method
 
 - (void)autoPlayHanlde:(id)timer
 {
@@ -115,56 +169,6 @@ enum {
         _numberOfPages = pages;
         unsigned long int offset = [self hasMultiplePages] ? _numberOfPages + 2 : 1;
         self.contentSize = CGSizeMake(self.frame.size.width * offset, self.contentSize.height);
-    }
-}
-
-- (void) setPage:(NSInteger) newIndex animated:(BOOL) animated {
-    [self setPage:newIndex transition:RFTEndlessScrollViewTransitionForward animated:animated];
-}
-
-- (void) setPage:(NSInteger) newIndex transition:(RFTEndlessScrollViewTransition) transition animated:(BOOL) animated {
-    if (newIndex == _currentPage) return;
-    
-    if (animated) {
-        //BOOL isOnePageMove = (abs(self.currentPage-newIndex) == 1);
-        CGPoint finalOffset;
-        
-        if (transition == RFTEndlessScrollViewTransitionAuto) {
-            if (newIndex > self.currentPage) transition = RFTEndlessScrollViewTransitionForward;
-            else if (newIndex < self.currentPage) transition = RFTEndlessScrollViewTransitionBackward;
-        }
-        
-        CGFloat size = self.frame.size.width;
-        
-        if (transition == RFTEndlessScrollViewTransitionForward) {
-            //if (!isOnePageMove)
-            //[self loadControllerAtIndex:newIndex andPlaceAtIndex:2];
-            [self loadImageViewAtIndex:newIndex andPlaceAtIndex:1];
-            
-            //finalOffset = [self createPoint:(size*(isOnePageMove ? 3 : 4))];
-            finalOffset = [self createPoint:(size*3)];
-        } else {
-            //if (!isOnePageMove)
-            //[self loadControllerAtIndex:newIndex andPlaceAtIndex:-2];
-            [self loadImageViewAtIndex:newIndex andPlaceAtIndex:-1];
-            
-            //finalOffset = [self createPoint:(size*(isOnePageMove ? 1 : 0))];
-            finalOffset = [self createPoint:(size*1)];
-        }
-        isManualAnimating = YES;
-        
-        [UIView animateWithDuration:kRFTEndlessScrollViewTransitionDuration
-                              delay:0.0
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             self.contentOffset = finalOffset;
-                         } completion:^(BOOL finished) {
-                             if (!finished) return;
-                             [self setCurrentImageView:newIndex];
-                             isManualAnimating = NO;
-                         }];
-    } else {
-        [self setCurrentImageView:newIndex];
     }
 }
 
@@ -246,12 +250,7 @@ enum {
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (isManualAnimating) {
-        /*
-         if (nil != _controlDelegate && [_controlDelegate respondsToSelector:@selector(endlessScrollViewDidScroll:at:withSelfDrivenAnimation:)]) {
-         [_controlDelegate endlessScrollViewDidScroll:self at:[self visibleRect].origin withSelfDrivenAnimation:YES];
-         }
-         */
+    if (self.isManualAnimating) {
         return;
     }
     
@@ -282,16 +281,6 @@ enum {
         newPageIndex = [self pageIndexByAdding:+1 from:_currentPage];
     
     [self setCurrentImageView:newPageIndex];
-    
-    /*
-     // alert delegate
-     if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewDidScroll:at:withSelfDrivenAnimation:)]) {
-     [controlDelegate lazyScrollViewDidScroll:self at:[self visibleRect].origin withSelfDrivenAnimation:NO];
-     }
-     else if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewDidScroll:at:)]) {
-     [controlDelegate lazyScrollViewDidScroll:self at:[self visibleRect].origin];
-     }
-     */
 }
 
 @end

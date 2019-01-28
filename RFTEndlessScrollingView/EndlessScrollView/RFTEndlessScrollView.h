@@ -10,39 +10,30 @@
 
 @class RFTEndlessScrollView;
 
-enum {
+typedef NS_ENUM(NSUInteger, RFTEndlessScrollViewTransition) {
     RFTEndlessScrollViewTransitionAuto      =   0,
-    RFTEndlessScrollViewTransitionForward   =   1,
-    RFTEndlessScrollViewTransitionBackward  =   2
-}; typedef NSUInteger RFTEndlessScrollViewTransition;
+    RFTEndlessScrollViewTransitionForward,
+    RFTEndlessScrollViewTransitionBackward
+};
 
 @protocol RFTEndlessScrollViewDelegate <NSObject>
-@optional
-/*
- - (void)lazyScrollViewWillBeginDragging:(DMLazyScrollView *)pagingView;
- //Called when it scrolls, except from as the result of self-driven animation.
- - (void)lazyScrollViewDidScroll:(DMLazyScrollView *)pagingView at:(CGPoint) visibleOffset;
- //Called whenever it scrolls: through user manipulation, setup, or self-driven animation.
- - (void)lazyScrollViewDidScroll:(DMLazyScrollView *)pagingView at:(CGPoint) visibleOffset withSelfDrivenAnimation:(BOOL)selfDrivenAnimation;
- - (void)lazyScrollViewDidEndDragging:(DMLazyScrollView *)pagingView;
- - (void)lazyScrollViewWillBeginDecelerating:(DMLazyScrollView *)pagingView;
- - (void)lazyScrollViewDidEndDecelerating:(DMLazyScrollView *)pagingView atPageIndex:(NSInteger)pageIndex;
- */
-- (void)endlessScrollView:(RFTEndlessScrollView *)pagingView currentPageChanged:(NSInteger)currentPageIndex;
-@end
 
+@optional
+- (void)endlessScrollView:(RFTEndlessScrollView *)pagingView currentPageChanged:(NSInteger)currentPageIndex;
+
+@end
 
 @interface RFTEndlessScrollView : UIScrollView
 
-@property (nonatomic,  copy) NSArray *dataSource;
-@property (nonatomic, weak ) id<RFTEndlessScrollViewDelegate> controlDelegate;
-@property (nonatomic,assign) NSUInteger                    numberOfPages;
-@property (readonly        ) NSUInteger                    currentPage;
-@property (nonatomic,assign) CGFloat autoPlayTime; //default 3 seconds
-@property (nonatomic, strong) NSTimer* timer_autoPlay;
+@property (nonatomic,   weak) id<RFTEndlessScrollViewDelegate> controlDelegate;
+@property (nonatomic,   copy) NSArray *dataSource;
+@property (nonatomic, assign) NSUInteger numberOfPages;
 
-- (void) resetAutoPlay;
-- (void) setPage:(NSInteger) index animated:(BOOL) animated;
-- (void) setPage:(NSInteger) newIndex transition:(RFTEndlessScrollViewTransition) transition animated:(BOOL) animated;
+/**
+ 开始自动播放，每 autoPlayTime 秒播放下一张，播放完回到第一页
+ */
+- (void)resetAutoPlay;
+- (void)setPage:(NSInteger)index animated:(BOOL)animated;
+- (void)setPage:(NSInteger)newIndex transition:(RFTEndlessScrollViewTransition)transition animated:(BOOL)animated;
 
 @end
