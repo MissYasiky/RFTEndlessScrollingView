@@ -38,6 +38,12 @@ enum {
     return self;
 }
 
+- (void)dealloc {
+    [_timer_autoPlay invalidate];
+    _timer_autoPlay = nil;
+    _controlDelegate = nil;
+}
+
 - (void) initializeControl
 {
     self.showsHorizontalScrollIndicator = NO;
@@ -195,7 +201,7 @@ enum {
 
 - (UIImageView *) loadImageViewAtIndex:(NSInteger) index andPlaceAtIndex:(NSInteger) destIndex
 {
-    UIImageView *imageView = _dataSource(index);
+    UIImageView *imageView = _dataSource[index];
     imageView.tag = 0;
     
     CGRect viewFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);

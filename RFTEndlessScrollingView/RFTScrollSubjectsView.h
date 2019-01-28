@@ -12,9 +12,9 @@
 
 @interface RFTScrollSubjectsView : UIView
 
-@property (nonatomic, retain) id<RFTScrollSubjectsViewDelegate> delegate;
-@property (nonatomic,retain) NSArray *subjects;
-@property (nonatomic,retain, readonly) UIPageControl *pageControl;
+@property (nonatomic, strong) id<RFTScrollSubjectsViewDelegate> delegate;
+@property (nonatomic, strong) NSArray<UIImage*> *subjects;
+@property (nonatomic, strong, readonly) UIPageControl *pageControl;
 
 @end
 

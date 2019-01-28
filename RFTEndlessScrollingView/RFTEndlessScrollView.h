@@ -10,8 +10,6 @@
 
 @class RFTEndlessScrollView;
 
-typedef UIImageView *(^RFTEndlessScrollViewDataSource)(NSInteger index);
-
 enum {
     RFTEndlessScrollViewTransitionAuto      =   0,
     RFTEndlessScrollViewTransitionForward   =   1,
@@ -36,7 +34,7 @@ enum {
 
 @interface RFTEndlessScrollView : UIScrollView
 
-@property (copy            ) RFTEndlessScrollViewDataSource   dataSource;
+@property (nonatomic,  copy) NSArray *dataSource;
 @property (nonatomic, weak ) id<RFTEndlessScrollViewDelegate> controlDelegate;
 @property (nonatomic,assign) NSUInteger                    numberOfPages;
 @property (readonly        ) NSUInteger                    currentPage;

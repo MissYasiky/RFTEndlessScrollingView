@@ -11,8 +11,8 @@
 
 @interface ViewController ()<RFTScrollSubjectsViewDelegate>
 
-@property (nonatomic, retain) RFTScrollSubjectsView    *scrollSubjectsView;
-@property (nonatomic, retain) NSArray                  *scrollSubjects;
+@property (nonatomic, strong) RFTScrollSubjectsView    *scrollSubjectsView;
+@property (nonatomic, strong) NSArray                  *scrollSubjects;
 
 @end
 
@@ -20,9 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor lightGrayColor]];
     
-    _scrollSubjects = [NSArray arrayWithObjects:[UIImage imageNamed:@"1"], [UIImage imageNamed:@"2"], [UIImage imageNamed:@"3"], nil];
+    _scrollSubjects = @[[UIImage imageNamed:@"1.png"], [UIImage imageNamed:@"2.png"], [UIImage imageNamed:@"3.png"]];
     
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     _scrollSubjectsView = [[RFTScrollSubjectsView alloc] initWithFrame:CGRectMake(0, -20, screenBounds.size.width, screenBounds.size.width)];
@@ -31,14 +30,9 @@
     [self.view addSubview:_scrollSubjectsView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - RFTScrollSubjectsView Delegate
 
-#pragma mark - WDScrollSubjectsViewDelegate
-- (void)selectedAtSubject:(NSInteger)index
-{
+- (void)selectedAtSubject:(NSInteger)index {
     //touch the view
 }
 
