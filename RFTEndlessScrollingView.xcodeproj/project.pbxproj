@@ -60,10 +60,7 @@
 		210101691C3FBA530067AE29 /* RFTEndlessScrollingView */ = {
 			isa = PBXGroup;
 			children = (
-				210101811C40A1C70067AE29 /* RFTEndlessScrollView.h */,
-				210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */,
-				210101841C40AB300067AE29 /* RFTScrollSubjectsView.h */,
-				210101851C40AB300067AE29 /* RFTScrollSubjectsView.m */,
+				2117A64421FEADD600328618 /* EndlessScrollView */,
 				2101016D1C3FBA530067AE29 /* AppDelegate.h */,
 				2101016E1C3FBA530067AE29 /* AppDelegate.m */,
 				210101701C3FBA530067AE29 /* ViewController.h */,
@@ -81,6 +78,17 @@
 				2101016B1C3FBA530067AE29 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2117A64421FEADD600328618 /* EndlessScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				210101811C40A1C70067AE29 /* RFTEndlessScrollView.h */,
+				210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */,
+				210101841C40AB300067AE29 /* RFTScrollSubjectsView.h */,
+				210101851C40AB300067AE29 /* RFTScrollSubjectsView.m */,
+			);
+			path = EndlessScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
