@@ -13,9 +13,6 @@
 		210101771C3FBA530067AE29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 210101761C3FBA530067AE29 /* Assets.xcassets */; };
 		210101831C40A1C70067AE29 /* RFTEndlessScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */; };
 		210101861C40AB300067AE29 /* RFTScrollSubjectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 210101851C40AB300067AE29 /* RFTScrollSubjectsView.m */; };
-		2153EA7D1C40C5B400D36966 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2153EA7A1C40C5B400D36966 /* 1.png */; };
-		2153EA7E1C40C5B400D36966 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2153EA7B1C40C5B400D36966 /* 2.png */; };
-		2153EA7F1C40C5B400D36966 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2153EA7C1C40C5B400D36966 /* 3.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +28,6 @@
 		210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFTEndlessScrollView.m; sourceTree = "<group>"; };
 		210101841C40AB300067AE29 /* RFTScrollSubjectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFTScrollSubjectsView.h; sourceTree = "<group>"; };
 		210101851C40AB300067AE29 /* RFTScrollSubjectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFTScrollSubjectsView.m; sourceTree = "<group>"; };
-		2153EA7A1C40C5B400D36966 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		2153EA7B1C40C5B400D36966 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
-		2153EA7C1C40C5B400D36966 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +60,6 @@
 		210101691C3FBA530067AE29 /* RFTEndlessScrollingView */ = {
 			isa = PBXGroup;
 			children = (
-				2153EA801C40C5BE00D36966 /* image */,
 				210101811C40A1C70067AE29 /* RFTEndlessScrollView.h */,
 				210101821C40A1C70067AE29 /* RFTEndlessScrollView.m */,
 				210101841C40AB300067AE29 /* RFTScrollSubjectsView.h */,
@@ -88,16 +81,6 @@
 				2101016B1C3FBA530067AE29 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		2153EA801C40C5BE00D36966 /* image */ = {
-			isa = PBXGroup;
-			children = (
-				2153EA7A1C40C5B400D36966 /* 1.png */,
-				2153EA7B1C40C5B400D36966 /* 2.png */,
-				2153EA7C1C40C5B400D36966 /* 3.png */,
-			);
-			name = image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,9 +140,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2153EA7D1C40C5B400D36966 /* 1.png in Resources */,
-				2153EA7E1C40C5B400D36966 /* 2.png in Resources */,
-				2153EA7F1C40C5B400D36966 /* 3.png in Resources */,
 				210101771C3FBA530067AE29 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
